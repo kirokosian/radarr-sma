@@ -17,6 +17,10 @@ RUN \
     python3 \
     py3-pip \
     py3-virtualenv && \
+  # install ffmpeg
+  wget ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz && \
+  tar xvf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components=1 && \
+  rm /tmp/ffmpeg.tar.xz && \
 # make directory
   mkdir ${SMA_PATH} && \
 # download repo
