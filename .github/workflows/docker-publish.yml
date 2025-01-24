@@ -15,6 +15,7 @@ env:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    environment: latest
     strategy:
       matrix:
         include:
@@ -62,6 +63,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    environment: latest
     needs: [docker]
     steps:
       -
