@@ -1,5 +1,5 @@
 FROM ghcr.io/linuxserver/radarr
-LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
+LABEL maintainer="kirokosian <kirokosian@pm.me>"
 
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Radarr
