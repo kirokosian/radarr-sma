@@ -6,7 +6,6 @@ ENV SMA_RS Radarr
 ENV SMA_UPDATE false
 ENV SMA_FFMPEG_PATH ffmpeg
 ENV SMA_FFPROBE_PATH ffprobe
-ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
 
 # get python3 and git, and install python libraries
 RUN \
@@ -16,11 +15,13 @@ RUN \
     wget \
     python3 \
     py3-pip \
-    py3-virtualenv && \
-  # install ffmpeg
-  wget ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz && \
-  tar xvf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components=1 && \
-  rm /tmp/ffmpeg.tar.xz && \
+    py3-virtualenv \
+    ffmpeg \
+    mesa-va-gallium \
+    libva-utils && \
+  # use the VAAPI-capable Alpine ffmpeg (h264_vaapi/hevc_vaapi) for HW transcoding
+  ln -sf /usr/bin/ffmpeg  /usr/local/bin/ffmpeg && \
+  ln -sf /usr/bin/ffprobe /usr/local/bin/ffprobe && \
 # make directory
   mkdir ${SMA_PATH} && \
 # download repo
@@ -30,7 +31,6 @@ RUN \
   python3 -m virtualenv ${SMA_PATH}/venv && \
   ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
 # cleanup
-  apk del --purge && \
   rm -rf \
     /root/.cache \
     /tmp/*
